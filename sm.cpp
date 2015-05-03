@@ -15,7 +15,7 @@ struct ScoreInfo
     string myName;
     string myDate;
 
-    ScoreInfo(int score, const string& name, const string& date) :
+    ScoreInfo(int score, const string& name, const string& date):
         myScore{score},
         myName{name},
         myDate{date}

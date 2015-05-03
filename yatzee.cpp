@@ -5,6 +5,16 @@
 
 using namespace std;
 
+const int Yatzee::bonusYatzee{100};
+const int Yatzee::bonusPoints{37};
+const int Yatzee::pointsMinForBonusPoints{63};
+const QMap<Combinaison, int> Yatzee::combinaison2points{ {BRELAN, 15},
+                                                         {CARRE, 40},
+                                                         {FULL, 25},
+                                                         {PTITE_SUITE, 30},
+                                                         {GRANDE_SUITE, 40},
+                                                         {YATZEE, 50} };
+
 Yatzee::Yatzee()
 {
     for(int i = 0; i < 5; i++)

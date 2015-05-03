@@ -2,6 +2,7 @@
 #define YATZEE_H
 
 #include <QList>
+#include <QMap>
 
 /**
  * Cette enumeration contient les differentes combinaisons possibles
@@ -28,12 +29,18 @@ using Combinaisons = QList<Combinaison>;
  */
 class Yatzee
 {
-private :
+private:
     QList<int> myDices;
     QList<int> myReserve;
     int myRemainingRolls;   // Nombre de lances max par joueur
 
-public :
+public:
+    static const int bonusYatzee;
+    static const int bonusPoints;
+    static const int pointsMinForBonusPoints;
+    static const QMap<Combinaison, int> combinaison2points;
+
+public:
     Yatzee();       // Il faut faire un qsrand() en debut de main !!
 
     const QList<int>& dices() const;
