@@ -29,12 +29,12 @@ int Yatzee::remainingRolls() const {return myRemainingRolls;}
 void Yatzee::print() const
 {
     cout << myDices.size() << " des :";
-    for(int i = 0; i < myDices.size(); i++)
-        cout << " " << myDices[i];
+    for(int dice : myDices)
+        cout << " " << dice;
     cout << endl;
     cout << myReserve.size() << " reserve :";
-    for(int i = 0; i < myReserve.size(); i++)
-        cout << " " << myReserve[i];
+    for(int dice : myReserve)
+        cout << " " << dice;
     cout << endl;
     cout << myRemainingRolls << " lances restants.";
     cout << endl;
@@ -55,8 +55,8 @@ bool Yatzee::roll()
     if(myRemainingRolls > 0)
     {
         // On donne une valeur aleatoire pr les des presents ds myDices
-        for(int i = 0; i < myDices.size(); i++)
-            myDices[i] = qrand() % 6 + 1;
+        for(int& dice : myDices)
+            dice = qrand() % 6 + 1;
 
         myRemainingRolls--;
 
@@ -70,10 +70,10 @@ bool Yatzee::roll()
 
 bool Yatzee::moveToReserve(int diceIdx)
 {
-    // Si valeur est bien un n° de de valide (valeur est ds [1, 6])
+    // Si diceIdx est bien un n° de de valide (diceIdx est ds [1, 6])
     if(diceIdx >= 1 && diceIdx <= myDices.size())
     {
-        myReserve.push_back(myDices[diceIdx-1]);   // On ajoute le de n° valeur a la fin de myReserve
+        myReserve.push_back(myDices[diceIdx-1]);   // On ajoute le de n° diceIdx a la fin de myReserve
         myDices.removeAt(diceIdx-1);               // On le sort de myDices
         return true;
     }
@@ -85,10 +85,10 @@ bool Yatzee::moveToReserve(int diceIdx)
 
 bool Yatzee::moveToDices(int diceIdx)
 {
-    // Si valeur est bien un n° de reserve valide (valeur est ds [1, 6])
+    // Si diceIdx est bien un n° de reserve valide (diceIdx est ds [1, 6])
     if(diceIdx >= 1 && diceIdx <= myReserve.size())
     {
-        myDices.push_back(myReserve[diceIdx-1]);   // On ajoute le de n° valeur a la fin de myDices
+        myDices.push_back(myReserve[diceIdx-1]);   // On ajoute le de n° diceIdx a la fin de myDices
         myReserve.removeAt(diceIdx-1);             // On le sort de myReserve
         return true;
     }
@@ -132,9 +132,11 @@ Combinaisons Yatzee::findCombinaisons() const
     tmp = QList<int>::fromStdList(stdtmp);
 
     // Inutile de regarder les suites si le nb de des ds tmp est trop petit
-    if(tmp.size() == 4)         // On ne peut avoir qu'une petite suite...
-        if(tmp[0]+3 == tmp[3])  // ...et on est certain que les indices st valides
-            v.push_back(PTITE_SUITE);
+    if(tmp.size() == 4 &&    // On ne peut avoir qu'une petite suite...
+       tmp[0]+3 == tmp[3])   // ...et on est certain que les indices st valides
+    {
+        v.push_back(PTITE_SUITE);
+    }
 
     // On peut avoir les deux suites
     if(tmp.size() == 5)
@@ -155,10 +157,10 @@ Combinaisons Yatzee::findCombinaisons() const
 int Yatzee::chance() const
 {
     int res = 0;
-    for(int i = 0; i < myReserve.size(); i++)
-        res += myReserve[i];
-    for(int i = 0; i < myDices.size(); i++)
-        res += myDices[i];
+    for(int dice : myReserve)
+        res += dice;
+    for(int dice : myDices)
+        res += dice;
     return res;
 }
 
@@ -168,13 +170,21 @@ int Yatzee::points(int num) const
     {
         int res = 0;
 
-        for(int i = 0; i < myReserve.size(); i++)
-            if(myReserve[i] == num)
-                res += myReserve[i];
+        for(int dice : myReserve)
+        {
+            if(dice == num)
+            {
+                res += dice;
+            }
+        }
 
-        for(int i = 0; i < myDices.size(); i++)
-            if(myDices[i] == num)
-                res += myDices[i];
+        for(int dice : myDices)
+        {
+            if(dice == num)
+            {
+                res += dice;
+            }
+        }
 
         return res;
     }

@@ -130,10 +130,10 @@ Yatfen::Yatfen(QWidget* parent):
     ******************************/
 
     connect(myActionQuitter, SIGNAL(triggered()), qApp, SLOT(quit()));
-    connect(myActionVoirScores, SIGNAL(triggered()), this, SLOT(seeScores()));
-    connect(myActionEffacerScores, SIGNAL(triggered()), this, SLOT(deleteScores()));
-    connect(myPBLancer, SIGNAL(clicked()), this, SLOT(roll()));
-    connect(myPBChance, SIGNAL(clicked()), this, SLOT(computeChance()));
+    connect(myActionVoirScores, &QAction::triggered, this, &Yatfen::seeScores);
+    connect(myActionEffacerScores, &QAction::triggered, this, &Yatfen::deleteScores);
+    connect(myPBLancer, &QPushButton::clicked, this, &Yatfen::roll);
+    connect(myPBChance, &QPushButton::clicked, this, &Yatfen::computeChance);
 
     for(int i = 0; i < 5; i++)
         connect(myPBDes[i], &QPushButton::clicked, [this, i](){moveToReserve(i+1);});
@@ -157,10 +157,10 @@ Yatfen::Yatfen(QWidget* parent):
 void Yatfen::update()
 {
     // On vide ts les boutons
-    for(int i = 0; i < 5; i++)
-        myPBDes[i]->setText("   \n   \n   ");
-    for(int i = 0; i < 5; i++)
-        myPBReserve[i]->setText("   \n   \n   ");
+    for(QPushButton* pb : myPBDes)
+        pb->setText("   \n   \n   ");
+    for(QPushButton* pb : myPBReserve)
+        pb->setText("   \n   \n   ");
 
     // On les remplit avec la valeur du de qui va bien
     for(int i = 0; i < myYatzee.dices().size(); i++)
@@ -317,8 +317,8 @@ void Yatfen::endOfGame()
 
         // Reinitialisation au niveau yatzee et GUI
         reset();
-        for(int i = 0; i < 6; i++)
-            myPBChiffres[i]->setEnabled(true);
+        for(QPushButton* pb : myPBChiffres)
+            pb->setEnabled(true);
         myPBCombinaison[BRELAN]->setEnabled(true);
         myPBCombinaison[CARRE]->setEnabled(true);
         myPBCombinaison[FULL]->setEnabled(true);
@@ -498,18 +498,18 @@ void Yatfen::seeScores()
         QStringList tmp = lignesScore[i].split('|');
 
         QStringList tmpDate = tmp[2].split('.');
-        QString jolieDate = QString("%1.%2.%3 %4h%5")
-                            .arg(tmpDate[0])
-                            .arg(tmpDate[1])
-                            .arg(tmpDate[2])
-                            .arg(tmpDate[3])
-                            .arg(tmpDate[4]);
+        QString cuteDate = QString("%1.%2.%3 %4h%5")
+                           .arg(tmpDate[0])
+                           .arg(tmpDate[1])
+                           .arg(tmpDate[2])
+                           .arg(tmpDate[3])
+                           .arg(tmpDate[4]);
 
         QLabel* label1 = new QLabel(tmp[0]);
         label1->setAlignment(Qt::AlignCenter);
         QLabel* label2 = new QLabel(tmp[1]);
         label2->setAlignment(Qt::AlignCenter);
-        QLabel* label3 = new QLabel(jolieDate);
+        QLabel* label3 = new QLabel(cuteDate);
         label3->setAlignment(Qt::AlignCenter);
 
         l->addWidget(label1, i+1, 0);
@@ -526,7 +526,7 @@ void Yatfen::seeScores()
 
 void Yatfen::deleteScores()
 {
-    QFile fichierScores(myScoreFilename);
+    QFile fichierScores{myScoreFilename};
     if(fichierScores.exists())
     {
         fichierScores.remove();

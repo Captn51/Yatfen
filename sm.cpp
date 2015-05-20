@@ -80,7 +80,7 @@ bool saveScore(const string& filename, int score, const string& name, const stri
 
         istringstream iss{line};
         getline(iss, tmp, '|');
-        tmpScore = atoi(tmp.c_str());
+        tmpScore = stoi(tmp);
         getline(iss, tmpName, '|');
         iss >> tmpDate;
 

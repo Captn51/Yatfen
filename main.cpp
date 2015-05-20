@@ -7,8 +7,8 @@ int main(int argc, char* argv[])
 
     qsrand(QDateTime::currentDateTime().toTime_t());
 
-    Yatfen w;
-    w.show();
+    Yatfen y;
+    y.show();
 
     return a.exec();
 }

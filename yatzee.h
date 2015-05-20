@@ -6,7 +6,7 @@
 
 /**
  * Cette enumeration contient les differentes combinaisons possibles
- * au yatzee
+ * au yatzee.
  */
 enum Combinaison
 {
@@ -25,14 +25,14 @@ using Combinaisons = QList<Combinaison>;
 
 /**
  * Cette classe implemente la couche "metier" du programme ; la GUI est
- * dans yatfen.h/cpp
+ * dans yatfen.h/cpp.
  */
 class Yatzee
 {
 private:
     QList<int> myDices;
     QList<int> myReserve;
-    int myRemainingRolls;   // Nombre de lances max par joueur
+    int myRemainingRolls;   /// Nombre de lances max par joueur.
 
 public:
     static const int bonusYatzee;
@@ -42,18 +42,21 @@ public:
 
 public:
     Yatzee();       // Il faut faire un qsrand() en debut de main !!
+    Yatzee(const Yatzee& y) = delete;
+    Yatzee(Yatzee&& y) = delete;
+    Yatzee& operator=(Yatzee y) = delete;
 
     const QList<int>& dices() const;
     const QList<int>& reserve() const;
     int remainingRolls() const;
     void print() const;
-    void reset();                            // Remet les des, la reserve et les lances comme a la creation du yatzee
-    bool moveToReserve(int diceIdx);         // diceIdx est l'indice du de a partir de 1 et non de 0
+    void reset();                            /// Remet les des, la reserve et les lances comme a la creation du yatzee.
+    bool moveToReserve(int diceIdx);
     bool moveToDices(int diceIdx);
-    bool roll();                             // Relance les valeurs de myDices
-    Combinaisons findCombinaisons() const;   // Regarde quelles combinaisons sont possibles
-    int chance() const;                      // Valeur obtenue en utilisant la chance
-    int points(int num) const;               // Nb de pts pr une certaine valeur de de (ou -1 si num n'est pas bon)
+    bool roll();                             /// Relance les valeurs de myDices.
+    Combinaisons findCombinaisons() const;   /// Regarde quelles combinaisons sont presentes.
+    int chance() const;                      /// Calcule la chance.
+    int points(int num) const;               /// Calcule le nombre de points pour le de de valeur num (-1 si num pas bon).
 };
 
 #endif

@@ -3,22 +3,23 @@
 
 #include <QtGui>
 #include <QtWidgets>
+
 #include "yatzee.h"
 
 /**
- * Cette structure rassemble les caracteristiques du joueur
+ * Cette structure rassemble les caracteristiques du joueur.
  */
 struct Player
 {
     QString name;
-    int points;          // Nb de points du joueur
-    int bonusPoints;     // Nb de points obtenus sans combinaison ni chance
-    int remainingRounds; // Nb de coups encore a jouer
-    bool bonusYatzee;    // S'il a eu un yatzee
+    int points;          /// Nb de points du joueur.
+    int bonusPoints;     /// Nb de points obtenus sans combinaison ni chance.
+    int remainingRounds; /// Nb de coups encore a jouer.
+    bool bonusYatzee;    /// S'il a eu un yatzee.
 };
 
 /**
- * Classe definissant la GUI pour le yatzee :)
+ * Classe definissant la GUI pour le yatzee. :)
  */
 class Yatfen : public QMainWindow
 {
@@ -58,24 +59,27 @@ private:
                         QLabel* myLabelBonusYatzee;      // + 50 pts si yatzee
 
 private:
-    void update();                   // Actualise les textes des des, de la reserve et du bouton lancer
-    void reset();                    // RAZ du yatzee et MAJ des textes des des, de la reserve et du bouton lancer
-    void updateScores();             // Actualise le texte indiquant le score
-    void endOfGame();                // Gere la fin du jeu : message de fin et demande de si on veut rejouer
-    QString int2points(int i) const; // Fait la liaison entre entier et nombre de points sur un de
+    void update();                   /// Actualise les textes des des, de la reserve et du bouton lancer.
+    void reset();                    /// RAZ du yatzee et MAJ des textes des des, de la reserve et du bouton lancer.
+    void updateScores();             /// Actualise le texte indiquant le score.
+    void endOfGame();                /// Gere la fin du jeu : message de fin et demande de si on veut rejouer.
+    QString int2points(int i) const; /// Fait la conversion entre entier et nombre de points sur un de.
 
 public:
     Yatfen(QWidget* parent = nullptr);
+    Yatfen(const Yatfen& y) = delete;
+    Yatfen(Yatfen&& y) = delete;
+    Yatfen& operator=(Yatfen y) = delete;
 
 public slots:
-    void roll();           // Lance les des (utilise Yatzee::roll() puis update())
+    void roll();           /// Lance les des (utilise Yatzee::roll() puis update()).
     void moveToReserve(int diceIdx);
     void moveToDices(int diceIdx);
     void computePoints(int number);
     void computeChance();
     void computeCombinaisonPoints(Combinaison combinaison);
-    void seeScores();      // Voir les scores dans une boite de dialogue
-    void deleteScores();   // Effacer le fichier des scores
+    void seeScores();      /// Voir les scores dans une boite de dialogue.
+    void deleteScores();   /// Effacer le fichier des scores.
 };
 
 #endif
