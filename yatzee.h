@@ -35,10 +35,10 @@ private:
     int myRemainingRolls;   /// Nombre de lances max par joueur.
 
 public:
-    static const int bonusYatzee;
-    static const int bonusPoints;
-    static const int pointsMinForBonusPoints;
-    static const QMap<Combinaison, int> combinaison2points;
+    static const int BONUS_YATZEE;
+    static const int BONUS_POINTS;
+    static const int POINTS_MIN_FOR_BONUS_POINTS;
+    static const QMap<Combinaison, int> COMBINAISON_TO_POINTS;
 
 public:
     Yatzee();       // Il faut faire un qsrand() en debut de main !!

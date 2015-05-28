@@ -405,15 +405,15 @@ void Yatfen::computePoints(int number)
     myPlayer.bonusPoints += myYatzee.points(number);
 
     // Bonus points
-    if(myPlayer.bonusPoints >= Yatzee::pointsMinForBonusPoints && myLabelBonusPoints->text().isEmpty())
+    if(myPlayer.bonusPoints >= Yatzee::POINTS_MIN_FOR_BONUS_POINTS && myLabelBonusPoints->text().isEmpty())
     {
         myLabelBonusPoints->setText("Bonus de points !!");
-        myPlayer.points += Yatzee::bonusPoints;
+        myPlayer.points += Yatzee::BONUS_POINTS;
     }
 
     // Bonus yatzee (s'il y a deja eu un yatzee et que l'on a a nouveau cing des identiques)
     if(myPlayer.bonusYatzee && myYatzee.findCombinaisons().contains(YATZEE))
-        myPlayer.points += Yatzee::bonusYatzee;
+        myPlayer.points += Yatzee::BONUS_YATZEE;
 
     // Affichage + raz yatzee
     updateScores();
@@ -432,7 +432,7 @@ void Yatfen::computeCombinaisonPoints(Combinaison combinaison)
 {
     // On calcule les points
     if(myYatzee.findCombinaisons().contains(combinaison))
-        myPlayer.points += Yatzee::combinaison2points[combinaison];
+        myPlayer.points += Yatzee::COMBINAISON_TO_POINTS[combinaison];
 
     // Cas du yatzee
     if(myYatzee.findCombinaisons().contains(YATZEE))
